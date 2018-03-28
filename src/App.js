@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+import TodoItem from "./TodoItem";
+
 class App extends Component {
     constructor() {
         super();
@@ -18,6 +20,12 @@ class App extends Component {
                        currentTodo: ""});
     }
 
+    deleteTodo = i => {
+        let todosCopy = this.state.todos.slice();
+        todosCopy.splice(i, 1);
+        this.setState({todos:todosCopy});
+    }
+
     onInputChange = e => {
         this.setState({ currentTodo : e.target.value });
     }
@@ -25,7 +33,7 @@ class App extends Component {
     render() {
         let bulletedTodos = this.state.todos.map((e, i) => {
             return (
-                    <li key={i}>{e}</li>
+                    <TodoItem todo={e} delete={() => this.deleteTodo(i)} />
             );
         });
         return (
